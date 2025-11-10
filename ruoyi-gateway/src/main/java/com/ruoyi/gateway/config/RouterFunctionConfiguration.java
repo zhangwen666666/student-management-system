@@ -24,6 +24,7 @@ public class RouterFunctionConfiguration
     @Bean
     public RouterFunction routerFunction()
     {
+        // 获取验证码
         return RouterFunctions.route(
                 RequestPredicates.GET("/code").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
                 validateCodeHandler);

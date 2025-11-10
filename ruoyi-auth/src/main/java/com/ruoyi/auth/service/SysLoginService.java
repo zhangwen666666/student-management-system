@@ -71,7 +71,7 @@ public class SysLoginService
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "很遗憾，访问IP已被列入系统黑名单");
             throw new ServiceException("很遗憾，访问IP已被列入系统黑名单");
         }
-        // 查询用户信息
+        // 查询用户信息 远程调用
         R<LoginUser> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
 
         if (R.FAIL == userResult.getCode())
@@ -91,6 +91,7 @@ public class SysLoginService
             recordLogService.recordLogininfor(username, Constants.LOGIN_FAIL, "用户已停用，请联系管理员");
             throw new ServiceException("对不起，您的账号：" + username + " 已停用");
         }
+        // 验证用户名密码
         passwordService.validate(user, password);
         recordLogService.recordLogininfor(username, Constants.LOGIN_SUCCESS, "登录成功");
         recordLoginInfo(user.getUserId());
